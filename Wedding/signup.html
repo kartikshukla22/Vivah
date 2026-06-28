@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign Up - Vivah</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="stylee.css" />
+</head>
+<body class="auth-body">
+<nav class="auth-nav">
+  <a href="Vivah.html" class="nav-logo">Vivah<span>✦</span></a>
+  <div class="auth-nav-links">
+    <a href="Vivah.html">Home</a>
+    <a href="login.html" class="nav-cta">Login</a>
+  </div>
+</nav>
+
+<main class="auth-page signup-layout">
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-heading">
+        <span class="section-tag">Sign Up</span>
+        <h2>Start your Vivah planner</h2>
+        <p>Create your couple profile and begin organizing every wedding detail.</p>
+      </div>
+
+      <form class="auth-form" onsubmit="handleSignup(event)">
+        <div class="auth-grid">
+          <div>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="partnerName">Partner Name</label>
+            <input id="partnerName" type="text" placeholder="Partner name" required />
+          </div>
+        </div>
+
+        <label for="signupEmail">Email Address</label>
+        <input id="signupEmail" type="email" placeholder="you@example.com" required />
+
+        <div class="auth-grid">
+          <div>
+            <label for="weddingDate">Wedding Date</label>
+            <input id="weddingDate" type="date" required />
+          </div>
+          <div>
+            <label for="city">Wedding City</label>
+            <input id="city" type="text" placeholder="Jaipur" required />
+          </div>
+        </div>
+
+        <label for="signupPassword">Password</label>
+        <input id="signupPassword" type="password" placeholder="Create a password" minlength="6" required />
+
+        <label class="auth-check terms"><input type="checkbox" required /> I agree to receive Vivah planning updates.</label>
+
+        <button type="submit" class="auth-submit">Create Account</button>
+      </form>
+
+      <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+      <p class="auth-message" id="signupMessage" role="status"></p>
+    </div>
+  </section>
+
+  <section class="auth-visual signup-visual" aria-label="Vivah wedding planning preview">
+    <div class="auth-visual-inner">
+      <span class="hero-tag">Plan Beautifully</span>
+      <h1>Your wedding dashboard begins here</h1>
+      <p>Build your guest list, keep costs clear, save vendors, and move from idea to ceremony with confidence.</p>
+      <div class="auth-feature-list">
+        <span>Guest manager</span>
+        <span>Budget tracker</span>
+        <span>Vendor shortlist</span>
+        <span>Timeline checklist</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+function handleSignup(event) {
+  event.preventDefault();
+  const name = document.getElementById('fullName').value.trim();
+  const partner = document.getElementById('partnerName').value.trim();
+  const message = document.getElementById('signupMessage');
+  message.textContent = `Welcome to Vivah, ${name} and ${partner}. Your account preview is ready.`;
+  message.classList.add('show');
+}
+</script>
+</body>
+</html>

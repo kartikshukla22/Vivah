@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vivah — Your Dream Wedding Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="stylee.css">
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ADD GUEST MODAL -->
+<div class="modal" id="guestModal">
+  <div class="modal-box">
+    <h3>➕ Add New Guest</h3>
+    <div class="modal-field"><label>Family / Guest Name</label><input type="text" id="newGuestName" placeholder="e.g. Patel Family" /></div>
+    <div class="modal-field"><label>Side</label>
+      <select id="newGuestSide"><option>Bride</option><option>Groom</option><option>Family Friend</option></select>
+    </div>
+    <div class="modal-field"><label>Meal Preference</label>
+      <select id="newGuestMeal"><option>Veg</option><option>Non-Veg</option><option>Jain</option><option>Mixed</option></select>
+    </div>
+    <div class="modal-field"><label>Number of Guests</label><input type="number" id="newGuestCount" value="2" min="1" max="20" /></div>
+    <div class="modal-field"><label>RSVP Status</label>
+      <select id="newGuestStatus"><option value="confirmed">Confirmed</option><option value="pending">Pending</option><option value="declined">Declined</option></select>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeGuestModal()">Cancel</button>
+      <button class="modal-submit" onclick="addGuest()">Add Guest</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-image" id="lbImage" alt="" />
+    <div class="lightbox-emoji" id="lbEmoji"></div>
+    <div class="lightbox-title" id="lbTitle"></div>
+    <div class="lightbox-desc" id="lbDesc"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Vivah<span>✦</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#planner">Planner</a></li>
+    <li><a href="#vendors">Vendors</a></li>
+    <li><a href="#gallery">Inspiration</a></li>
+    <li><a href="#guests">Guests</a></li>
+    <li><a href="login.html">Login</a></li>
+    <li><a href="#cta" class="nav-cta">Start Planning</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger">☰</button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#vendors" onclick="closeMobileMenu()">Vendors</a>
+  <a href="#planner" onclick="closeMobileMenu()">Planner</a>
+  <a href="#gallery" onclick="closeMobileMenu()">Inspiration</a>
+  <a href="#guests" onclick="closeMobileMenu()">Guests</a>
+  <a href="login.html" onclick="closeMobileMenu()">Login</a>
+  <a href="#cta" onclick="closeMobileMenu()">Start Planning</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text fade-up">
+    <span class="hero-tag">✦ Your Dream Wedding Portal</span>
+    <h1>Plan your <em>perfect</em><br>wedding day</h1>
+    <p class="hero-sub">From venues to vows, Vivah brings every detail of your special day into one beautiful, effortless space.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#planner" class="btn-outline">View Planner</a>
+    </div>
+    <div class="countdown-wrap" id="countdown">
+      <div class="countdown-box"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Minutes</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdSecs">--</span><span class="countdown-label">Seconds</span></div>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.6rem;">⏳ Countdown to Rishi &amp; Dimple Big Day — February 25, 2027</p>
+  </div>
+  <div class="hero-visual fade-up" style="transition-delay:.15s;">
+    <div class="hero-card-big">
+      <div class="hero-card-big-label">
+        <p>Rishi &amp; Dimple</p>
+        <span>Wedding Date — February 25, 2027 · Jaipur</span>
+      </div>
+    </div>
+    <div class="hero-cards-row">
+      <div class="hero-card-sm"><div class="icon">💐</div><strong id="heroGuests">200 Guests</strong><p id="heroGuestsConfirmed">80 confirmed so far</p></div>
+      <div class="hero-card-sm"><div class="icon">💰</div><strong>₹25L Budget</strong><p>₹12.1L allocated</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num" data-target="8400">0</span><span class="stat-label">Weddings Planned</span></div>
+  <div class="stat"><span class="stat-num" data-target="1200">0</span><span class="stat-label">Verified Vendors</span></div>
+  <div class="stat"><span class="stat-num" data-target="320">0</span><span class="stat-label">Premium Venues</span></div>
+  <div class="stat"><span class="stat-num" data-target="98">0</span><span class="stat-label">% Satisfaction</span></div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-tag fade-up">What We Offer</div>
+  <h2 class="section-title fade-up">Everything your<br>wedding needs</h2>
+  <p class="section-sub fade-up">All the tools and connections to plan, book, and celebrate without the stress.</p>
+  <div class="search-filter-bar fade-up">
+    <input type="text" class="search-input" id="serviceSearch" placeholder="🔍  Search services..." oninput="filterServices()" />
+    <button class="filter-btn active" onclick="filterServiceCat(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterServiceCat(this,'venue')">Venue</button>
+    <button class="filter-btn" onclick="filterServiceCat(this,'media')">Media</button>
+    <button class="filter-btn" onclick="filterServiceCat(this,'style')">Style</button>
+    <button class="filter-btn" onclick="filterServiceCat(this,'fun')">Fun</button>
+  </div>
+  <div class="services-grid" id="servicesGrid">
+    <div class="service-card fade-up" data-cat="venue" onclick="showToast('Venue Search coming soon! 🏰','info')">
+      <div class="service-icon rose">💒</div><h3>Venue Search</h3><p>Filter by city, guest count, budget, and style to find your perfect wedding venue.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="media" onclick="showToast('Photography booking opened! 📸','success')">
+      <div class="service-icon gold">📸</div><h3>Photographers</h3><p>Browse portfolios of certified photographers and videographers across India.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="style" onclick="showToast('Decoration enquiry sent! 🌺','success')">
+      <div class="service-icon sage">🌺</div><h3>Decoration</h3><p>Floral arrangements, lighting, mandap decor — book trusted decorators instantly.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="venue" onclick="showToast('Catering options loading... 🍽️','info')">
+      <div class="service-icon rose">🍽️</div><h3>Catering</h3><p>From traditional thalis to live counters — explore menus and book catering teams.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="fun" onclick="showToast('Music & DJ booking opened! 🎵','success')">
+      <div class="service-icon gold">🎵</div><h3>Music &amp; DJ</h3><p>Live bands, DJs, and classical ensembles to fill your celebration with the right energy.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="style" onclick="showToast('Bridal styling enquiry sent! 👗','success')">
+      <div class="service-icon sage">👗</div><h3>Bridal Styling</h3><p>Connect with top makeup artists, mehendi designers, and bridal couture boutiques.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="media" onclick="showToast('Invitation designer opened! 🃏','info')">
+      <div class="service-icon rose">🃏</div><h3>Invitations</h3><p>Design and send beautiful digital and printed wedding invitations in minutes.</p>
+    </div>
+    <div class="service-card fade-up" data-cat="fun" onclick="showToast('Honeymoon packages loading! ✈️','info')">
+      <div class="service-icon gold">✈️</div><h3>Honeymoon</h3><p>Curated honeymoon packages so you go from "I do" to "let's go" seamlessly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANNER -->
+<section style="background:var(--rose-lt);padding:0;">
+  <div class="section" id="planner">
+    <div class="section-tag center-text fade-up">Your Planner</div>
+    <h2 class="section-title center-text fade-up">Stay on track, <em style="font-style:italic;color:var(--rose-dk);">every step</em></h2>
+    <p class="section-sub center fade-up">Track your tasks, timeline, and budget all in one place.</p>
+    <div class="checklist-wrap">
+      <div class="checklist fade-up">
+        <div class="checklist-progress">
+          <div class="checklist-progress-label"><span>Checklist Progress</span><span id="checklistPct">0%</span></div>
+          <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="checklistFill" style="width:0%"></div></div>
+        </div>
+        <div class="checklist-group">
+          <h4>12 Months Before</h4>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><span class="item-text done">Set your wedding date</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><span class="item-text done">Decide on guest list size</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><span class="item-text done">Finalize wedding venue</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><span class="item-text done">Book photographer</span></div>
+        </div>
+        <div class="checklist-group">
+          <h4>6 Months Before</h4>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><span class="item-text done">Send save-the-dates</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Book caterer and menus</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Schedule bridal shopping</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Arrange guest accommodation</span></div>
+        </div>
+        <div class="checklist-group">
+          <h4>1 Month Before</h4>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Confirm all vendors</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Final guest count to caterer</span></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box todo"></div><span class="item-text">Rehearsal dinner plan</span></div>
+        </div>
+      </div>
+      <div class="fade-up" style="transition-delay:.1s;">
+        <div class="budget-card">
+          <h3>💰 Budget Overview</h3>
+          <div class="budget-row"><span>Venue &amp; Catering</span><span>₹7,50,000</span></div>
+          <div class="budget-row"><span>Decoration &amp; Flowers</span><span>₹2,80,000</span></div>
+          <div class="budget-row"><span>Photography &amp; Video</span><span>₹1,20,000</span></div>
+          <div class="budget-row"><span>Bridal Attire &amp; Styling</span><span>₹60,000</span></div>
+          <div class="budget-row"><span>Music &amp; Entertainment</span><span>₹40,000</span></div>
+          <div class="budget-row" id="extraBudgetRows"></div>
+          <div class="budget-bar-wrap">
+            <div class="budget-bar-label"><span>Spent so far</span><span id="budgetPctLabel">66% used</span></div>
+            <div class="budget-bar"><div class="budget-bar-fill" id="budgetFill" style="width:66%"></div></div>
+          </div>
+          <div class="budget-total"><span>Total Budget</span><span>₹18,40,000</span></div>
+          <div class="budget-input-row">
+            <input class="budget-input" id="budgetItem" placeholder="Item name" />
+            <input class="budget-input" id="budgetAmt" placeholder="₹ Amount" type="number" style="max-width:110px;" />
+            <button class="budget-add-btn" onclick="addBudgetItem()">+ Add</button>
+          </div>
+        </div>
+        <div style="margin-top:2rem;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:1.8rem;">
+          <h3 style="font-family:var(--serif);font-size:1.2rem;margin-bottom:1.4rem;">📅 Key Timeline</h3>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-dot done"></div><div class="timeline-month">Oct 2026</div><h4>Engagement Ceremony</h4><p>Completed — 85 guests attended</p></div>
+            <div class="timeline-item"><div class="timeline-dot done"></div><div class="timeline-month">Dec 2026</div><h4>Venue Booking Confirmed</h4><p>Rambagh Palace, Jaipur</p></div>
+            <div class="timeline-item"><div class="timeline-dot active"></div><div class="timeline-month">Now</div><h4>Vendor Finalization</h4><p>In progress — 6 of 8 vendors booked</p></div>
+            <div class="timeline-item"><div class="timeline-dot todo"></div><div class="timeline-month">20 Feb 2027</div><h4>Mehendi &amp; Haldi</h4><p>Pre-wedding celebration</p></div>
+            <div class="timeline-item"><div class="timeline-dot todo"></div><div class="timeline-month">25 Feb, 2027</div><h4>The Wedding Day 💍</h4><p>Main ceremony &amp; reception</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENDORS -->
+<section class="section" id="vendors">
+  <div class="section-tag fade-up">Top Vendors</div>
+  <h2 class="section-title fade-up">Trusted by<br>thousands of couples</h2>
+  <p class="section-sub fade-up">Every vendor is verified, rated, and reviewed by real couples.</p>
+  <div class="search-filter-bar fade-up">
+    <input type="text" class="search-input" id="vendorSearch" placeholder="🔍  Search vendors..." oninput="filterVendors()" />
+    <button class="filter-btn active" onclick="filterVendorCat(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterVendorCat(this,'decoration')">Decoration</button>
+    <button class="filter-btn" onclick="filterVendorCat(this,'photography')">Photography</button>
+    <button class="filter-btn" onclick="filterVendorCat(this,'catering')">Catering</button>
+    <button class="filter-btn" onclick="filterVendorCat(this,'music')">Music</button>
+  </div>
+  <div class="vendors-grid" id="vendorsGrid">
+    <div class="vendor-card fade-up" data-cat="decoration">
+      <div class="vendor-img v1">💐<span class="vendor-badge">★ 4.9</span></div>
+      <div class="vendor-body">
+        <div class="vendor-cat">Decoration</div><h3>Bloom &amp; Blossom</h3>
+        <p>Luxury floral arrangements and full mandap decor. 300+ weddings styled.</p>
+        <div class="vendor-meta"><span class="vendor-price">From ₹85,000</span><span class="vendor-stars">★★★★★</span></div>
+        <button class="vendor-book-btn" onclick="bookVendor(this,'Bloom & Blossom')">Book Now</button>
+      </div>
+    </div>
+    <div class="vendor-card fade-up" data-cat="photography">
+      <div class="vendor-img v2">📸<span class="vendor-badge">★ 4.8</span></div>
+      <div class="vendor-body">
+        <div class="vendor-cat">Photography</div><h3>Lens &amp; Love Studio</h3>
+        <p>Cinematic wedding films and candid photography. Based in Delhi NCR.</p>
+        <div class="vendor-meta"><span class="vendor-price">From ₹60,000</span><span class="vendor-stars">★★★★★</span></div>
+        <button class="vendor-book-btn" onclick="bookVendor(this,'Lens & Love Studio')">Book Now</button>
+      </div>
+    </div>
+    <div class="vendor-card fade-up" data-cat="catering">
+      <div class="vendor-img v3">🍽️<span class="vendor-badge">★ 4.9</span></div>
+      <div class="vendor-body">
+        <div class="vendor-cat">Catering</div><h3>The Royal Feast</h3>
+        <p>Rajasthani &amp; North Indian cuisine specialists. Min 100 guests.</p>
+        <div class="vendor-meta"><span class="vendor-price">₹1,200/plate</span><span class="vendor-stars">★★★★★</span></div>
+        <button class="vendor-book-btn" onclick="bookVendor(this,'The Royal Feast')">Book Now</button>
+      </div>
+    </div>
+    <div class="vendor-card fade-up" data-cat="music">
+      <div class="vendor-img v4">🎵<span class="vendor-badge">★ 4.7</span></div>
+      <div class="vendor-body">
+        <div class="vendor-cat">Music</div><h3>Serenade Band</h3>
+        <p>Live Bollywood and classical band for sangeet &amp; reception nights.</p>
+        <div class="vendor-meta"><span class="vendor-price">From ₹45,000</span><span class="vendor-stars">★★★★☆</span></div>
+        <button class="vendor-book-btn" onclick="bookVendor(this,'Serenade Band')">Book Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="background:var(--ink);padding:5rem 0;" id="gallery">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="section-tag fade-up" style="color:var(--gold);">Inspiration Gallery</div>
+    <h2 class="section-title fade-up" style="color:var(--white);">Beautiful weddings<br>begin <em style="font-style:italic;color:var(--gold);">here</em></h2>
+    <p class="section-sub fade-up" style="color:#B0A8A4;margin-bottom:2rem;">Click any theme to explore it.</p>
+    <div class="gallery-grid fade-up">
+      <div class="gallery-item" style="grid-column:span 2;grid-row:span 2;background-image:url('images\\Royal_Floral.png');background-size:cover;background-position:center;height:420px;" onclick="openLightbox('🌸','Royal Floral','Lush marigold and rose arrangements inspired by Rajasthani palaces.','images\\Royal_Floral.png')"><div class="gallery-label">Royal Floral</div></div>
+      <div class="gallery-item" style="background-image:url('images\\Candle_light.png');background-size:cover;background-position:center;height:200px;" onclick="openLightbox('🕯️','Candlelit Romance','Warm amber lighting with pillar candles and fairy lights for an intimate feel.','images\\Candle_light.png')"><div class="gallery-label">Candlelit Romance</div></div>
+      <div class="gallery-item" style="background-image:url('images\\Minimilist.png');background-size:cover;background-position:center;height:200px;" onclick="openLightbox('💍','Minimalist Elegance','Clean whites, sage greens, and understated luxury for the modern couple.','images\\Minimilist.png')"><div class="gallery-label">Minimalist Elegance</div></div>
+      <div class="gallery-item" style="background-image:url('images\\Grand_wed.png');background-size:cover;background-position:center;height:200px;" onclick="openLightbox('🎊','Grand Celebration','Vibrant colours, dhol, and fireworks — the full Indian wedding experience.','images\\Grand_wed.png')"><div class="gallery-label">Grand Celebration</div></div>
+      <div class="gallery-item" style="background-image:url('images\\Garden.png');background-size:cover;background-position:center;height:200px;" onclick="openLightbox('🌹','Garden Party','Outdoor ceremony in a rose garden with vintage furniture and pastel florals.','images\\Garden.png')"><div class="gallery-label">Garden Party</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GUEST LIST -->
+<section class="section" id="guests">
+  <div class="section-tag fade-up">Guest Management</div>
+  <h2 class="section-title fade-up">Track every RSVP,<br>effortlessly</h2>
+  <p class="section-sub fade-up">Add guests, track RSVPs, filter by status — all live.</p>
+  <div class="guest-wrap fade-up">
+    <div class="guest-header">
+      <h3 id="guestCountTitle">Guest List — 124 Invited</h3>
+      <div class="guest-chips">
+        <span class="chip confirmed" id="chipConfirmed" onclick="filterGuests('confirmed',this)">92 Confirmed</span>
+        <span class="chip pending"   id="chipPending"   onclick="filterGuests('pending',this)">18 Pending</span>
+        <span class="chip declined"  id="chipDeclined"  onclick="filterGuests('declined',this)">14 Declined</span>
+      </div>
+    </div>
+    <div class="guest-search-row">
+      <input class="guest-search" id="guestSearch" placeholder="🔍  Search by name…" oninput="searchGuests()" />
+      <button class="add-guest-btn" onclick="openGuestModal()">+ Add Guest</button>
+    </div>
+    <table class="guest-table" id="guestTable">
+      <thead>
+        <tr>
+          <th onclick="sortGuests('name')">Name ⇅</th>
+          <th onclick="sortGuests('side')">Side ⇅</th>
+          <th>Meal Pref.</th>
+          <th onclick="sortGuests('count')">Guests ⇅</th>
+          <th onclick="sortGuests('status')">Status ⇅</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="guestTbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner" id="cta">
+  <h2>Your love story deserves a<br><em>perfect</em> beginning</h2>
+  <p>Join 8,000+ couples who planned their dream wedding with Vivah.</p>
+  <div class="cta-form">
+    <input type="text" class="cta-input" id="ctaName" placeholder="Full Name" />
+    <input type="text" class="cta-input" id="ctaContact" placeholder="Contact Number" />
+    <input type="email" class="cta-input" id="ctaEmail" placeholder="Enter your email address" />
+    <button class="btn-white" onclick="handleCTASubmit()">Start Planning Free</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Vivah<span>✦</span></a>
+      <p>India's most trusted wedding planning portal. Making your dream celebration a beautiful reality, one detail at a time.</p>
+    </div>
+    <div><h4>Services</h4><ul><li><a href="#">Venue Search</a></li><li><a href="#">Photography</a></li><li><a href="#">Catering</a></li><li><a href="#">Decoration</a></li><li><a href="#">Bridal Styling</a></li></ul></div>
+    <div><h4>Planner</h4><ul><li><a href="#">Checklist</a></li><li><a href="#">Budget Tool</a></li><li><a href="#">Guest Manager</a></li><li><a href="#">Timeline</a></li><li><a href="#">Invitations</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Blog</a></li><li><a href="#">Real Weddings</a></li><li><a href="#">For Vendors</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Vivah Wedding Portal. All rights reserved by KARTIK.</span>
+    <span>Made with ❤️ for every couple's perfect day</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

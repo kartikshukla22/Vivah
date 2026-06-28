@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login - Vivah</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="stylee.css" />
+</head>
+<body class="auth-body">
+<nav class="auth-nav">
+  <a href="Vivah.html" class="nav-logo">Vivah <span>✦</span></a>
+  <div class="auth-nav-links">
+    <a href="Vivah.html">Home</a>
+    <a href="signup.html" class="nav-cta">Sign Up</a>
+  </div>
+</nav>
+
+<main class="auth-page">
+  <section class="auth-visual login-visual" aria-label="Vivah wedding planning preview">
+    <div class="auth-visual-inner">
+      <span class="hero-tag">Welcome Back</span>
+      <h1>Continue planning your perfect celebration</h1>
+      <p>Access your checklist, vendor bookings, guest list, and budget dashboard from one calm wedding workspace.</p>
+      <div class="auth-stats">
+        <div><strong>200</strong><span>Guests tracked</span></div>
+        <div><strong>66%</strong><span>Budget planned</span></div>
+        <div><strong>8</strong><span>Vendors shortlisted</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-heading">
+        <span class="section-tag">Login</span>
+        <h2>Good to see you again</h2>
+        <p>Sign in to open your Vivah planner.</p>
+      </div>
+
+      <form class="auth-form" onsubmit="handleLogin(event)">
+        <label for="loginEmail">Email Address</label>
+        <input id="loginEmail" type="email" placeholder="you@example.com" required />
+
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter your password" minlength="6" required />
+
+        <div class="auth-options">
+          <label class="auth-check"><input type="checkbox" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="auth-submit">Login</button>
+      </form>
+
+      <p class="auth-switch">New to Vivah? <a href="signup.html">Create an account</a></p>
+      <p class="auth-message" id="loginMessage" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<script>
+function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const message = document.getElementById('loginMessage');
+  message.textContent = `Welcome back, ${email}. Your planner is ready.`;
+  message.classList.add('show');
+}
+</script>
+</body>
+</html>
